@@ -13,12 +13,13 @@ class TransactionResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'amount' => $this->amount,
-            'transaction_type' => $this->type,
+            'transaction_type' => $this->transaction_type,
             'status' => $this->status,
             'external_ref' => $this->external_ref,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
             'user' => new UserResource($this->whenLoaded('user')),
+            'logs' => TransactionLogResource::collection($this->whenLoaded('logs')),
         ];
     }
 }
