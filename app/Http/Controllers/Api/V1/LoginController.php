@@ -29,10 +29,11 @@ class LoginController extends Controller
 
         /** @var User $user */
         $user = Auth::user();
+        $fullNameEncoded = base64_encode('Ervalsa Dwi Nanda');
 
         return ApiResponseFormatter::success(
             data: [
-                'access_token' => $user->createToken('access_token')->plainTextToken,
+                'access_token' => $user->createToken($fullNameEncoded)->plainTextToken,
                 'token_type' => 'Bearer',
                 'expires_in' => 3600,
                 'user' => new UserResource($user),

@@ -15,6 +15,8 @@ class UserProfileResource extends JsonResource
             'email' => $this->email,
             'balance' => $this->balance,
             'role' => new RoleResource($this->whenLoaded('roles')),
+            'total_deposit' => $this->total_deposit,
+            'total_withdrawal' => $this->total_withdrawal,
         ];
     }
 }

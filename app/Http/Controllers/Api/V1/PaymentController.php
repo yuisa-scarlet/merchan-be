@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Helpers\ApiResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\PaymentRequest;
+use App\Http\Resources\TransactionResource;
 use App\Services\PaymentService;
 use Illuminate\Http\JsonResponse;
 use Spatie\RouteDiscovery\Attributes\DoNotDiscover;
@@ -24,7 +25,7 @@ class PaymentController extends Controller
             $payment = $this->service->processPayment($data);
 
             return ApiResponseFormatter::success(
-                data: $payment,
+                data: new TransactionResource($payment),
                 message: 'Payment processed successfully',
             );
         } catch (\Exception $e) {

@@ -18,6 +18,19 @@ class ProfileController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::guard('api')->user();
 
+        $totalDeposit = $user->transactions()
+            ->where('transaction_type', 'deposit')
+            ->where('status', 'paid')
+            ->sum('amount');
+
+        $totalWithdrawal = $user->transactions()
+            ->where('transaction_type', 'withdrawal')
+            ->where('status', 'paid')
+            ->sum('amount');
+
+        $user->total_deposit = $totalDeposit;
+        $user->total_withdrawal = $totalWithdrawal;
+
         return ApiResponseFormatter::success(
             data: new UserProfileResource($user),
             message: 'User profile retrieved successfully'

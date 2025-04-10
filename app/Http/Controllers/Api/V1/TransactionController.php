@@ -19,17 +19,15 @@ class TransactionController extends Controller
     #[Route(method: 'GET', fullUri: 'transactions', middleware: [RedirectIfNotAuthenticatedApi::class])]
     public function index(): JsonResponse
     {
-        $perPage = request()->query('per_page', 10);
-
         $user = Auth::guard('api')->user();
         $transactions = QueryBuilder::for(Transaction::with('user'))
+            ->defaultSort('-created_at')
             ->allowedFilters(['external_ref', 'status'])
             ->allowedSorts(['created_at', 'updated_at'])
             ->when($user->role === UserRoleEnum::USER, function ($query) use ($user) {
                 return $query->where('user_id', $user->id);
             })
-            ->paginate($perPage)
-            ->appends(request()->query());
+            ->get();
 
         return ApiResponseFormatter::success(
             data: (new TransactionCollection($transactions))->response()->getData(true)['data'],

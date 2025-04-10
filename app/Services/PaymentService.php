@@ -10,7 +10,7 @@ use App\Models\TransactionLog;
 
 class PaymentService
 {
-  public function processPayment(array $data)
+  public function processPayment(array $data): Transaction
   {
     $transaction = Transaction::where('external_ref', $data['external_ref'])->first();
 
