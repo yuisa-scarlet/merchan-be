@@ -37,6 +37,18 @@ Jalankan project
 php artisan serve
 ```
 
+ENV
+```
+APP_TIMEZONE="Asia/Jakarta"
+
+DB_CONNECTION=pgsql
+DB_HOST={your_host}
+DB_PORT={your_post}
+DB_DATABASE={your_database_name}
+DB_USERNAME={your_database_username}
+DB_PASSWORD={your_database_password}
+```
+
 ```
 php artisan migrate
 ```
